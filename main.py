@@ -15,6 +15,8 @@ from torch.autograd import Variable
 
 from model import RN, CNN_MLP
 
+from tqdm import tqdm
+
 
 # Training settings
 parser = argparse.ArgumentParser(description='PyTorch Relational-Network sort-of-CLVR Example')
@@ -22,7 +24,7 @@ parser.add_argument('--model', type=str, choices=['RN', 'CNN_MLP'], default='RN'
                     help='resume from model stored')
 parser.add_argument('--batch-size', type=int, default=64, metavar='N',
                     help='input batch size for training (default: 64)')
-parser.add_argument('--epochs', type=int, default=20, metavar='N',
+parser.add_argument('--epochs', type=int, default=40, metavar='N',
                     help='number of epochs to train (default: 20)')
 parser.add_argument('--lr', type=float, default=0.0001, metavar='LR',
                     help='learning rate (default: 0.0001)')
@@ -93,16 +95,16 @@ def train(epoch, rel, norel):
     rel = cvt_data_axis(rel)
     norel = cvt_data_axis(norel)
 
-    for batch_idx in range(len(rel[0]) // bs):
+    for batch_idx in tqdm(range(len(rel[0]) // bs)):
         tensor_data(rel, batch_idx)
-        accuracy_rel = model.train_(input_img, input_qst, label)
+        model.train_(input_img, input_qst, label)
 
         tensor_data(norel, batch_idx)
-        accuracy_norel = model.train_(input_img, input_qst, label)
+        model.train_(input_img, input_qst, label)
 
-        if batch_idx % args.log_interval == 0:
-            print('Train Epoch: {} [{}/{} ({:.0f}%)] Relations accuracy: {:.0f}% | Non-relations accuracy: {:.0f}%'.format(epoch, batch_idx * bs * 2, len(rel[0]) * 2, \
-                                                                                                                           100. * batch_idx * bs/ len(rel[0]), accuracy_rel, accuracy_norel))
+#         if batch_idx % args.log_interval == 0:
+#             print('Train Epoch: {} [{}/{} ({:.0f}%)] Relations accuracy: {:.0f}% | Non-relations accuracy: {:.0f}%'.format(epoch, batch_idx * bs * 2, len(rel[0]) * 2, \
+#                                                                                                                            100. * batch_idx * bs/ len(rel[0]), accuracy_rel, accuracy_norel))
             
 
 def test(epoch, rel, norel):
@@ -174,6 +176,7 @@ if args.resume:
         print('==> loaded checkpoint {}'.format(filename))
 
 for epoch in range(1, args.epochs + 1):
+    print("Epoch ",epoch)
     train(epoch, rel_train, norel_train)
     test(epoch, rel_test, norel_test)
     model.save_model(epoch)

@@ -49,7 +49,7 @@ class FCOutputModel(nn.Module):
         x = F.relu(x)
         x = F.dropout(x)
         x = self.fc3(x)
-        return F.log_softmax(x)
+        return F.log_softmax(x, dim=1)
 
   
 
@@ -64,10 +64,10 @@ class BasicModel(nn.Module):
         loss = F.nll_loss(output, label)
         loss.backward()
         self.optimizer.step()
-        pred = output.data.max(1)[1]
-        correct = pred.eq(label.data).cpu().sum()
-        accuracy = correct * 100. / len(label)
-        return accuracy
+#         pred = output.data.max(1)[1]
+#         correct = pred.eq(label.data).cpu().sum()
+#         accuracy = correct * 100. / len(label)
+#         return accuracy
         
     def test_(self, input_img, input_qst, label):
         output = self(input_img, input_qst)
