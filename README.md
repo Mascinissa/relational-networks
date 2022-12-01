@@ -40,40 +40,38 @@ And relational questions:
 
 ## Requirements
 
-- Python 2.7
+- Python 
 - [numpy](http://www.numpy.org/)
 - [pytorch](http://pytorch.org/)
 - [opencv](http://opencv.org/)
 
 ## Usage
+### Images version of Sort-of-CLEVR task
 
-	$ ./run.sh
+  	$ python SoCLEVR_images_generator.py
 
-or
-
-  	$ python sort_of_clevr_generator.py
-
-to generate sort-of-clevr dataset
+to generate the images version of the sort-of-clevr dataset
 and
 
- 	 $ python main.py 
+ 	 $ python train_SoCLEVR_images.py
 
-to train.
+to train the model.
 
-## Modifications
-In the original paper, Sort-of-CLEVR task used different model from CLEVR task. However, because model used CLEVR requires much less time to compute (network is much smaller), this model is used for Sort-of-CLEVR task.
+### State description version of Sort-of-CLEVR task
+
+  	$ python SoCLEVR_state_description_generator.py
+
+to generate the state description version of the sort-of-clevr dataset
+and
+
+ 	 $ python train_SoCLEVR_state_description.py
+
+to train the model.
 
 ## Result
 
-| | Relational Networks (20th epoch) | CNN + MLP (without RN, 100th epoch) |
+| | Images version (40th epoch) | State description version (25th epoch)|
 | --- | --- | --- |
-| Non-relational question | 99% | 66% |
-| Relational question | 89% | 66% |
+| Non-relational question | 99% | 99% |
+| Relational question | 89% | 96% |
 
-CNN + MLP occured overfitting to the training data.
-
-Relational networks shows far better results in relational questions and non-relation questions. 
-
-## Contributions
-
-[@gngdb](https://github.com/gngdb) speeds up the model by 10 times.
