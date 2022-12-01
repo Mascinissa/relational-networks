@@ -1,6 +1,6 @@
 Pytorch implementation of Relational Networks - [A simple neural network module for relational reasoning](https://arxiv.org/pdf/1706.01427.pdf)
 
-Implemented & tested on Sort-of-CLEVR task.
+Implemented & tested on Sort-of-CLEVR task. Augmented with support for state description task on the Sort-of-CLEVR dataset.
 
 ## Sort-of-CLEVR
 
