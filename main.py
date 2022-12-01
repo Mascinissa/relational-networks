@@ -127,8 +127,9 @@ def test(epoch, rel, norel):
 
     accuracy_rel = sum(accuracy_rels) / len(accuracy_rels)
     accuracy_norel = sum(accuracy_norels) / len(accuracy_norels)
-    print('\n Test set: Relation accuracy: {:.0f}% | Non-relation accuracy: {:.0f}%\n'.format(
-        accuracy_rel, accuracy_norel))
+    return accuracy_rel, accuracy_norel
+#     print('\n Test set: Relation accuracy: {:.0f}% | Non-relation accuracy: {:.0f}%\n'.format(
+#         accuracy_rel, accuracy_norel))
 
     
 def load_data():
@@ -178,5 +179,10 @@ if args.resume:
 for epoch in range(1, args.epochs + 1):
     print("Epoch ",epoch)
     train(epoch, rel_train, norel_train)
-    test(epoch, rel_test, norel_test)
+    
+    accuracy_rel_train, accuracy_norel_train= test(epoch, rel_train, norel_train)
+    print('Train set: Relation accuracy: {:.0f}% | Non-relation accuracy: {:.0f}%\n'.format(accuracy_rel_train, accuracy_norel_train))
+    accuracy_rel_test, accuracy_norel_test= test(epoch, rel_test, norel_test)
+    print('Test set: Relation accuracy: {:.0f}% | Non-relation accuracy: {:.0f}%\n'.format(accuracy_rel_test, accuracy_norel_test))
+    
     model.save_model(epoch)
