@@ -102,11 +102,6 @@ def train(epoch, rel, norel):
         tensor_data(norel, batch_idx)
         model.train_(input_img, input_qst, label)
 
-#         if batch_idx % args.log_interval == 0:
-#             print('Train Epoch: {} [{}/{} ({:.0f}%)] Relations accuracy: {:.0f}% | Non-relations accuracy: {:.0f}%'.format(epoch, batch_idx * bs * 2, len(rel[0]) * 2, \
-#                                                                                                                            100. * batch_idx * bs/ len(rel[0]), accuracy_rel, accuracy_norel))
-            
-
 def test(epoch, rel, norel):
     model.eval()
     if not len(rel[0]) == len(norel[0]):
@@ -128,8 +123,6 @@ def test(epoch, rel, norel):
     accuracy_rel = sum(accuracy_rels) / len(accuracy_rels)
     accuracy_norel = sum(accuracy_norels) / len(accuracy_norels)
     return accuracy_rel, accuracy_norel
-#     print('\n Test set: Relation accuracy: {:.0f}% | Non-relation accuracy: {:.0f}%\n'.format(
-#         accuracy_rel, accuracy_norel))
 
     
 def load_data():
