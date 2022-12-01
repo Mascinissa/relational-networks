@@ -50,24 +50,16 @@ def build_dataset():
     objects = []
     objects_description = [] # format (instance_id,color,X,Y,shape)
     objects_description_vects = [] # format color(6),x(1),y(1),shape(2)
-#     img = np.ones((img_size,img_size,3)) * 255
     
     for color_id,color in enumerate(colors):  
         center = center_generate(objects)
         color_vect = [0,0,0,0,0,0]
         color_vect[color_id] = 1
         if random.random()<0.5:
-#             start = (center[0]-size, center[1]-size)
-#             end = (center[0]+size, center[1]+size)
-#             cv2.rectangle(img, start, end, color, -1)
             objects.append((color_id,center,'r'))
-#             shape = 'square'
             shape_vect = [1,0]
         else:
-#             center_ = (center[0], center[1])
-#             cv2.circle(img, center_, size, color, -1)
             objects.append((color_id,center,'c'))
-#             shape = 'circle'
             shape_vect = [0,1]
         objects_description_vects.append([*color_vect,center[0], center[1],*shape_vect])
 
@@ -153,7 +145,7 @@ def build_dataset():
     relations = (rel_questions, rel_answers)
     norelations = (norel_questions, norel_answers)
     
-#     img = img/255.
+
     dataset = (objects_description_vects, relations, norelations)
     return dataset
 
@@ -164,11 +156,11 @@ print('building train datasets...')
 train_datasets = [build_dataset() for _ in range(train_size)]
 
 #showing random samples 
+print('printing random samples  from the training set of state description tables')
 for i in range(5):
     sample_id = random.randint(0,train_size)
     objects_description_vects , relations, norelations = train_datasets[sample_id]
     objects_description = []
-#     print(objects_description_vects)
     for vect in objects_description_vects:
         color = color_names[np.argmax(vect[:6])]
         X = vect[6]
@@ -177,15 +169,10 @@ for i in range(5):
         objects_description.append([i,color,X,Y,shape])
         
     df = pd.DataFrame(objects_description, columns = ['instance_id','color','X','Y','shape'])
+    pd.set_option('display.max_columns', None)
     print(df, '\n\n')
     
     
-
-
-#img_count = 0
-#cv2.imwrite(os.path.join(dirs,'{}.png'.format(img_count)), cv2.resize(train_datasets[0][0]*255, (512,512)))
-
-
 print('saving datasets...')
 filename = os.path.join(dirs,'sort-of-clevr_state_description.pickle')
 with  open(filename, 'wb') as f:
