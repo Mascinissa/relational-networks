@@ -174,7 +174,7 @@ for epoch in range(1, args.epochs + 1):
     train(epoch, rel_train, norel_train)
     
     accuracy_rel_train, accuracy_norel_train= test(epoch, rel_train, norel_train)
-    print('Train set: Relation accuracy: {:.0f}% | Non-relation accuracy: {:.0f}%\n'.format(accuracy_rel_train, accuracy_norel_train))
+    print('Train set: Relation accuracy: {:.0f}% | Non-relation accuracy: {:.0f}%'.format(accuracy_rel_train, accuracy_norel_train))
     accuracy_rel_test, accuracy_norel_test= test(epoch, rel_test, norel_test)
     print('Test set: Relation accuracy: {:.0f}% | Non-relation accuracy: {:.0f}%\n'.format(accuracy_rel_test, accuracy_norel_test))
     
