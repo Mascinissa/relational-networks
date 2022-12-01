@@ -46,6 +46,10 @@ And relational questions:
 - [opencv](http://opencv.org/)
 
 ## Usage
+The code can be executed directly from the notebook included above on Colab [![Open In Colab](https://colab.research.google.com/assets/colab-badge.svg)](https://colab.research.google.com/github/Mascinissa/relational-networks/blob/master/Sort_of_CLEVR_RN_notebook.ipynb)
+
+You can also run the scripts separately, as follows:
+
 ### Images version of Sort-of-CLEVR task
 
   	$ python SoCLEVR_images_generator.py
