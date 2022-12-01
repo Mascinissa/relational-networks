@@ -12,7 +12,7 @@ import numpy as np
 import torch
 from torch.autograd import Variable
 
-from model_state_description import RN
+from SoCLEVR_state_description_model import RN
 from tqdm import tqdm
 
 
