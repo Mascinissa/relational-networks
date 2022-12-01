@@ -13,7 +13,7 @@ import numpy as np
 import torch
 from torch.autograd import Variable
 
-from model import RN, CNN_MLP
+from SoCLEVR_images_model import RN, CNN_MLP
 
 from tqdm import tqdm
 
