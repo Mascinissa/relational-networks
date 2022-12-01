@@ -99,13 +99,8 @@ def train(epoch, rel, norel):
         accuracy_rel = model.train_(input_tabs, input_qst, label)
 
         tensor_data(norel, batch_idx)
-#         accuracy_norel = model.train_(input_tabs, input_qst, label)
         model.train_(input_tabs, input_qst, label)
 
-#         if batch_idx % args.log_interval == 0:
-#             print('Train Epoch: {} [{}/{} ({:.0f}%)] Relations accuracy: {:.0f}% | Non-relations accuracy: {:.0f}%'.format(epoch, batch_idx * bs * 2, len(rel[0]) * 2, \
-#                                                                                                                            100. * batch_idx * bs/ len(rel[0]), accuracy_rel, accuracy_norel))
-            
 
 def test(epoch, rel, norel):
     model.eval()
@@ -127,8 +122,7 @@ def test(epoch, rel, norel):
 
     accuracy_rel = sum(accuracy_rels) / len(accuracy_rels)
     accuracy_norel = sum(accuracy_norels) / len(accuracy_norels)
-    print('\n Test set: Relation accuracy: {:.0f}% | Non-relation accuracy: {:.0f}%\n'.format(
-        accuracy_rel, accuracy_norel))
+    return accuracy_rel,accuracy_norel
 
     
 def load_data():
@@ -144,14 +138,12 @@ def load_data():
     print('processing data...')
 
     for tabs, relations, norelations in train_datasets:
-#         tabs = np.swapaxes(tabs,0,2)
         for qst,ans in zip(relations[0], relations[1]):
             rel_train.append((tabs,qst,ans))
         for qst,ans in zip(norelations[0], norelations[1]):
             norel_train.append((tabs,qst,ans))
 
     for tabs, relations, norelations in test_datasets:
-#         tabs = np.swapaxes(tabs,0,2)
         for qst,ans in zip(relations[0], relations[1]):
             rel_test.append((tabs,qst,ans))
         for qst,ans in zip(norelations[0], norelations[1]):
@@ -178,5 +170,9 @@ if args.resume:
 for epoch in range(1, args.epochs + 1):
     print('Epoch', epoch)
     train(epoch, rel_train, norel_train)
-    test(epoch, rel_test, norel_test)
+   
+    accuracy_rel_train, accuracy_norel_train= test(epoch, rel_train, norel_train)
+    print('Train set: Relation accuracy: {:.0f}% | Non-relation accuracy: {:.0f}%'.format(accuracy_rel_train, accuracy_norel_train))
+    accuracy_rel_test, accuracy_norel_test= test(epoch, rel_test, norel_test)
+    print('Test set: Relation accuracy: {:.0f}% | Non-relation accuracy: {:.0f}%\n'.format(accuracy_rel_test, accuracy_norel_test))
     model.save_model(epoch)
