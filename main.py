@@ -170,7 +170,7 @@ if args.resume:
         print('==> loaded checkpoint {}'.format(filename))
 
 for epoch in range(1, args.epochs + 1):
-    print("Epoch ",epoch)
+    print("Epoch ",epoch,"/",args.epochs)
     train(epoch, rel_train, norel_train)
     
     accuracy_rel_train, accuracy_norel_train= test(epoch, rel_train, norel_train)
